@@ -2,15 +2,23 @@ import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 // import pdf from 'pdf-parse'; // Use dynamic import instead
 // import { GoogleGenerativeAI } from '@google/generative-ai'; // Use dynamic import instead
-import { GEMINI_API_KEY } from '$env/static/private'; // Import from private env vars
+// import { GEMINI_API_KEY } from '$env/static/private'; // Use process.env instead
+
+// Access environment variable directly via process.env
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 if (!GEMINI_API_KEY) {
-  throw new Error('GEMINI_API_KEY environment variable is not set.');
+  // Throw an error during initialization if the key is missing
+  throw new Error('GEMINI_API_KEY environment variable is not set or not accessible.');
 }
 
 // Initialize Google Generative AI dynamically
 async function getGeminiModel() {
   const { GoogleGenerativeAI } = await import('@google/generative-ai');
+  // Ensure GEMINI_API_KEY is defined before using it
+  if (!GEMINI_API_KEY) {
+    throw new Error('GEMINI_API_KEY is missing when trying to initialize GoogleGenerativeAI.');
+  }
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
   return genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 }
