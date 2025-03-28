@@ -1,6 +1,6 @@
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import pdf from 'pdf-parse';
+// import pdf from 'pdf-parse'; // Use dynamic import instead
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GEMINI_API_KEY } from '$env/static/private'; // Import from private env vars
 
@@ -31,6 +31,8 @@ export const POST: RequestHandler = async ({ request }) => {
     // Parse PDF text
     let pdfTextContent = '';
     try {
+      // Dynamically import pdf-parse
+      const pdf = (await import('pdf-parse')).default;
       const data = await pdf(buffer);
       // Combine text from all pages, maybe add separators
       pdfTextContent = data.text; // Consider data.numpages for per-page analysis later
