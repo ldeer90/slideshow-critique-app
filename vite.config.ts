@@ -8,8 +8,8 @@ export default defineConfig({
 	// },
 	build: {
 		rollupOptions: {
-			// Explicitly externalize the generative-ai package as suggested by Netlify logs
-			external: ['@google/generative-ai']
+			// Explicitly externalize packages causing issues in Netlify build
+			external: ['@google/generative-ai', 'pdf-parse']
 		}
 	}
 });
