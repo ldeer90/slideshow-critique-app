@@ -4,9 +4,9 @@
   # Ensure node_modules needed by functions are included
   # included_files = ["node_modules/pdf-parse/**"] # Trying external_node_modules instead
 
-  # Use esbuild bundler and mark pdf-parse as external
+  # Use esbuild bundler and mark packages as external
   node_bundler = "esbuild"
-  external_node_modules = ["pdf-parse"]
+  external_node_modules = ["pdf-parse", "@google/generative-ai"]
 
 # Optional: Specify Node.js version if needed, though Netlify usually uses a compatible one.
 # [build.environment]
