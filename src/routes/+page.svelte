@@ -109,7 +109,8 @@
         disabled={isLoading}
       />
     </div>
-    <div class="flex-grow border rounded bg-white overflow-auto min-h-0"> {/* Added min-h-0 for flex grow */}
+    <!-- Added min-h-0 for flex grow -->
+    <div class="flex-grow border rounded bg-white overflow-auto min-h-0">
       {#if presentationUrl}
         <!-- Basic embed for PDF - will replace with pdf.js later -->
         <iframe src={presentationUrl} title="Presentation Preview" class="w-full h-full border-0"></iframe>
