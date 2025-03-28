@@ -3,8 +3,13 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [sveltekit()],
-	ssr: {
-		// Explicitly externalize the generative-ai package for SSR/Netlify Functions
-		external: ['@google/generative-ai']
+	// ssr: { // Moving externalization to build.rollupOptions
+	// 	external: ['@google/generative-ai']
+	// },
+	build: {
+		rollupOptions: {
+			// Explicitly externalize the generative-ai package as suggested by Netlify logs
+			external: ['@google/generative-ai']
+		}
 	}
 });
