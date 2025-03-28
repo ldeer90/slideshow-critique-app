@@ -1,12 +1,13 @@
 # Netlify configuration file
 
 [functions]
-  # Ensure node_modules needed by functions are included
-  # included_files = ["node_modules/pdf-parse/**"] # Trying external_node_modules instead
+  # Ensure node_modules needed by functions are included.
+  # This attempts to force inclusion of these specific packages.
+  included_files = ["node_modules/pdf-parse/**", "node_modules/@google/generative-ai/**"]
 
-  # Use esbuild bundler and mark packages as external
-  node_bundler = "esbuild"
-  external_node_modules = ["pdf-parse", "@google/generative-ai"]
+# Reverting previous attempts as they didn't work
+# node_bundler = "esbuild"
+# external_node_modules = ["pdf-parse", "@google/generative-ai"]
 
 # Optional: Specify Node.js version if needed, though Netlify usually uses a compatible one.
 # [build.environment]
