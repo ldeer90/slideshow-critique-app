@@ -1,0 +1,11 @@
+# Netlify configuration file
+
+[functions]
+  # Ensure node_modules needed by functions are included
+  # This specifically targets the pdf-parse package for inclusion.
+  # Adjust the path pattern if pdf-parse has internal dependencies causing issues.
+  included_files = ["node_modules/pdf-parse/**"]
+
+# Optional: Specify Node.js version if needed, though Netlify usually uses a compatible one.
+# [build.environment]
+#   NODE_VERSION = "20" # Or your preferred compatible LTS version
