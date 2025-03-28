@@ -1,16 +1,19 @@
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 // import pdf from 'pdf-parse'; // Use dynamic import instead
-import { GoogleGenerativeAI } from '@google/generative-ai';
+// import { GoogleGenerativeAI } from '@google/generative-ai'; // Use dynamic import instead
 import { GEMINI_API_KEY } from '$env/static/private'; // Import from private env vars
 
 if (!GEMINI_API_KEY) {
   throw new Error('GEMINI_API_KEY environment variable is not set.');
 }
 
-// Initialize Google Generative AI
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }); // Use the specified model
+// Initialize Google Generative AI dynamically
+async function getGeminiModel() {
+  const { GoogleGenerativeAI } = await import('@google/generative-ai');
+  const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+  return genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+}
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
@@ -69,6 +72,7 @@ export const POST: RequestHandler = async ({ request }) => {
     let critiqueResult = '';
     try {
       console.log('Sending prompt to Gemini...');
+      const model = await getGeminiModel(); // Get model instance
       const result = await model.generateContent(prompt);
       const response = result.response;
       critiqueResult = response.text();
